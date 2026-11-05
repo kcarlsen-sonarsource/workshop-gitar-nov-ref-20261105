@@ -18,6 +18,8 @@ def resolve_ticket(store: Store, code: str, event_id: str) -> Ticket:
         raise CheckinError("ticket is for a different event", 409)
     if ticket.status != "valid":
         raise CheckinError("ticket is void", 409)
+    if ticket.checked_in_at is not None:
+        raise CheckinError("ticket already checked in", 409)
     return ticket
 
 
